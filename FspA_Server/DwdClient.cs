@@ -12,10 +12,10 @@ namespace FspA_Server
 {
     class DwdClient
     { 
-        private int a;
-        private int b;
         private string adressFtp;
         private string localPath;
+        private string createPath;
+        private string dataName;
 
         private FtpWebRequest request;
         private FtpWebResponse response;
@@ -25,19 +25,31 @@ namespace FspA_Server
         public DwdClient()
         {
             this.adressFtp = "ftp://ftp-cdc.dwd.de/pub/CDC/derived_germany/soil/daily/recent/derived_germany_soil_daily_recent_232.txt.gz";
-            this.localPath = @"C:\Users\Ben\Documents\Studium Elektrotechnik\S5_Fachstudienprojekt_A\Testentpackt.txt";
+            //this.localPath = @"C:\Users\Ben\Documents\Studium Elektrotechnik\S5_Fachstudienprojekt_A\Testdata.txt";
+            this.createPath = @"C:\ATFolder";
+            this.dataName = "Testdata.txt";
         }
         ~DwdClient()
         {
             this.saveStream.Dispose();
             this.response.Close();
             this.responseStream.Close();
-            //File.Delete(this.localPath);
+            //Löscht Datei aus Lokalempfad und Ordner!!!
+           /* File.Delete(this.localPath);
+            Directory.Delete(this.createPath);*/
         }
 
         public void setAdressFtp(string adressFtp)
         {
-            this.adressFtp = adressFtp;
+            if(String.IsNullOrEmpty(adressFtp))
+            {
+                return;
+            }
+            else
+            {
+               this.adressFtp = adressFtp;
+            }
+            
         }
 
         public string getAdressFtp()
@@ -47,7 +59,16 @@ namespace FspA_Server
 
         public void setLocalPath(string localPath)
         {
-            this.localPath = localPath;
+            if(String.IsNullOrEmpty(localPath))
+            {
+                System.IO.Directory.CreateDirectory(this.createPath);
+                this.localPath = createPath + @"\" + dataName;
+            }
+            else
+            {
+                this.localPath = localPath + @"\" + dataName;
+            }
+            
         }
 
         public string getLocalPath()
@@ -66,9 +87,7 @@ namespace FspA_Server
         public void getResponseFtp()
         {
             this.response = (FtpWebResponse)request.GetResponse();
-
-            Console.WriteLine("Download Complete, status {0}", response.StatusDescription);
-
+           // Console.WriteLine("Download Complete, status {0}", response.StatusDescription);
             this.responseStream = this.response.GetResponseStream();
         }
 
@@ -80,6 +99,8 @@ namespace FspA_Server
             decompressionStream.CopyTo(saveStream);
 
             decompressionStream.Close();
+
+            Console.WriteLine("Download Complete, status {0}", response.StatusDescription);
         }
     }
 }

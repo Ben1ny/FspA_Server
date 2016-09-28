@@ -18,19 +18,37 @@ namespace FspA_Server
 
         public Program()
         {
-            this.adressFtp = " ";
-            this.localPath = " ";
+            this.adressFtp = "";
+            this.localPath = "";
+        }
+
+        public void getDataDwD()
+        {
+            DwdClient dwdcl = new DwdClient();
+            dwdcl.setAdressFtp(this.adressFtp);
+            dwdcl.setLocalPath(this.localPath);
+            /*Debug
+             * Console.WriteLine("Ftp: {0}\n Pfad: {1}", dwdcl.getAdressFtp(), dwdcl.getLocalPath());*/
+            dwdcl.connectToFtp();
+            dwdcl.getResponseFtp();
+            dwdcl.decompressAndSave();
+            dwdcl = null;
         }
 
         static void Main(string[] args)
         {
             Program prog = new Program();
+            
             Console.WriteLine("Geben Sie den gewünschten Ftp-Adresse an:");
             prog.adressFtp = @Console.ReadLine();
             Console.WriteLine("Geben Sie den gewünschten Speicherpfad an:");
             prog.localPath = @Console.ReadLine();
             Console.WriteLine("Ftp: {0}\n Pfad: {1}", prog.adressFtp, prog.localPath);
+            prog.getDataDwD();
+
             Console.ReadLine();
+            /*GC.Collect();
+            GC.WaitForPendingFinalizers();*/
         }
     }
 }
