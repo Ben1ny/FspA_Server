@@ -25,6 +25,7 @@ namespace FspA_Server
         public void getDataDwD()
         {
             DwdClient dwdcl = new DwdClient();
+            
             dwdcl.setAdressFtp(this.adressFtp);
             dwdcl.setLocalPath(this.localPath);
             /*Debug
@@ -38,7 +39,9 @@ namespace FspA_Server
         static void Main(string[] args)
         {
             Program prog = new Program();
+            DataServer dats2 = new DataServer();
             
+
             Console.WriteLine("Geben Sie den gewünschten Ftp-Adresse an:");
             prog.adressFtp = @Console.ReadLine();
             Console.WriteLine("Geben Sie den gewünschten Speicherpfad an:");
@@ -46,9 +49,18 @@ namespace FspA_Server
             Console.WriteLine("Ftp: {0}\n Pfad: {1}", prog.adressFtp, prog.localPath);
             prog.getDataDwD();
 
+            dats2.StartListening();
             Console.ReadLine();
             /*GC.Collect();
             GC.WaitForPendingFinalizers();*/
         }
     }
 }
+
+/*
+<xs:element name="ort" type="xs:string"/>
+<xs:element name="datum" type="xs:string"/> <!--01.11.2016-->
+<xs:element name="uhrzeit" type="xs:string"/> <!--20:00-->
+<xs:element name="temperatur" type="xs:byte"/> <!--Celsius-->
+<xs:element name="luftfeuchte" type="xs:byte"/> <!--Prozentwert-->
+*/
