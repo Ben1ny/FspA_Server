@@ -27,10 +27,19 @@ namespace FspA_Server
         //Constructor
         public DwdClient()
         {
+            /*ftp://ftp-cdc.dwd.de/pub/CDC/observations_germany/climate/hourly/air_temperature/recent/stundenwerte_TU_00232_akt.zip*/
             this.adressFtp = "ftp://ftp-cdc.dwd.de/pub/CDC/derived_germany/soil/daily/recent/derived_germany_soil_daily_recent_232.txt.gz";
             //this.localPath = @"C:\Users\Ben\Documents\Studium Elektrotechnik\S5_Fachstudienprojekt_A\Testdata.txt";
             this.createPath = @"C:\ATFolder";
             this.dataName = "Testdata.txt";
+
+            /*Login Dwd Grundversorger:
+            User: gds26798
+            Passwort: IOrbkMZj
+            Server: ftp://ftp-outgoing2.dwd.de
+
+            Connection URL: ftp://gds26798:IOrbkMZj@ftp-outgoing2.dwd.de
+*/
         }
 
         //Destructor
@@ -40,10 +49,12 @@ namespace FspA_Server
             this.response.Close();
             this.responseStream.Close();
             //Löscht Datei aus Lokalempfad und Ordner!!!
-            //File.Delete(this.localPath);
-            //Directory.Delete(this.createPath);
+            // Noch nicht ganz ausgereift, Fehler bei löschen wenn zuvor eigenes Verzeichnis angegeben wird.
+           /* File.Delete(this.localPath);
+            Directory.Delete(this.createPath);*/
         }
-
+        /*Anlegen der Ftp-Adresse um die Aktuellen Daten zu holen.
+          Ftp Adresse + Dateiname + Dateiendung*/
         public void setAdressFtp(string adressFtp)
         {
             if(String.IsNullOrEmpty(adressFtp))
@@ -62,6 +73,8 @@ namespace FspA_Server
             return this.adressFtp;
         }
 
+        /*Funktion zum einlesen des lokalen Speicherortes für die Datei des Dwd.
+          Dateipfad ohne Dateiname*/
         public void setLocalPath(string localPath)
         {
             if(String.IsNullOrEmpty(localPath))
@@ -81,6 +94,8 @@ namespace FspA_Server
             return this.localPath;
         }
 
+        /*Herstellen einer Verbindung zum Ftp Server, anhand der eingegebenen Adresse.
+          alternativ kann ein Passwort und Nutzername angegeben werden -> "anonymous"*/
         public void connectToFtp()
         {
             this.request = (FtpWebRequest)WebRequest.Create(adressFtp);
@@ -89,6 +104,7 @@ namespace FspA_Server
             this.request.Credentials = new NetworkCredential("anonymous", "anonymous");
         }
 
+        /*Entgegennahme der Ftpserver Antwort. Wird zwischengespeichert in einem responseStream Objekt*/
         public void getResponseFtp()
         {
             this.response = (FtpWebResponse)request.GetResponse();
@@ -96,6 +112,8 @@ namespace FspA_Server
             this.responseStream = this.response.GetResponseStream();
         }
 
+        /*Anlegen eines lokalen neune Files im Speicherort localPath. Anschließend wird das responseStream Objekt mit hilfe eines GZipStream Objektes dekomprimiert
+         * und im lokalen Speicherort abgespeichert.*/
         public void decompressAndSave()
         {
             //Erzeugen einer neuen Datei im Pfad: localPath
