@@ -129,18 +129,19 @@ namespace FspA_Server
 
         public void openFile()
         {
+            
+
             try
             {   // Open the text file using a stream reader.
                 using (StreamReader sr = new StreamReader(@"C:\ATFolder\Testdata.txt"))
                 {
                 // Read the stream to a string, and write the string to the console. //Hierher
                 //https://msdn.microsoft.com/de-de/library/db5x7c0d(v=vs.110).aspx
-                //String[] lines = System.IO.File.ReadAllLines(@"C:\\ATFolder\\Testdata.txt"); //
+                String[] lines = System.IO.File.ReadAllLines(@"C:\\ATFolder\\Testdata.txt"); //
                 //https://msdn.microsoft.com/de-de/library/ezwyzy7b.aspx
                 //https://msdn.microsoft.com/de-de/library/2c7h58e5(v=vs.110).aspx
-                String line = sr.ReadLine(); //nur die 1. Zeile lesen
-                                             //String line = sr.ReadToEnd();//komplette Datei lesen
-                Console.WriteLine(line);
+               
+                Console.WriteLine("{0} \n {1}", lines[0], lines[lines.Length - 1]); //Konsole ist die Kommandozeile als Objekt
                 }
             }
             catch (Exception e)
