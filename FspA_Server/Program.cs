@@ -28,14 +28,16 @@ namespace FspA_Server
             
             dwdcl.setAdressFtp(this.adressFtp);
             dwdcl.setLocalPath(this.localPath);
-            /*Debug
-             * Console.WriteLine("Ftp: {0}\n Pfad: {1}", dwdcl.getAdressFtp(), dwdcl.getLocalPath());*/
+            //Debug
+              Console.WriteLine("Ftp: {0}\n Pfad: {1}", dwdcl.getAdressFtp(), dwdcl.getLocalPath());
             dwdcl.connectToFtp();
             dwdcl.getResponseFtp();
             dwdcl.decompressAndSave();
-            //dwdcl.convertTexttoXml();
+
+            dwdcl.openFile(); //Datei als Stream öffnen
             dwdcl = null;
         }
+
 
         static void Main(string[] args)
         {
@@ -47,7 +49,9 @@ namespace FspA_Server
             prog.adressFtp = @Console.ReadLine();
             Console.WriteLine("Geben Sie den gewünschten Speicherpfad an:");
             prog.localPath = @Console.ReadLine();
-            Console.WriteLine("Ftp: {0}\n Pfad: {1}", prog.adressFtp, prog.localPath);
+            
+           /* prog.getDataDwD();
+            Console.WriteLine("Ftp: {0}\n Pfad: {1}", prog.adressFtp, prog.localPath);*/
             prog.getDataDwD();
 
             /*Funktioniert
@@ -62,8 +66,10 @@ namespace FspA_Server
 
 /*
 <xs:element name="ort" type="xs:string"/>
-<xs:element name="datum" type="xs:string"/> <!--01.11.2016-->
-<xs:element name="uhrzeit" type="xs:string"/> <!--20:00-->
+<xs:element name="datum" type="xs:string"/> <!--20161101-->
+<xs:element name="uhrzeit" type="xs:string"/> <!--2000-->
 <xs:element name="temperatur" type="xs:byte"/> <!--Celsius-->
 <xs:element name="luftfeuchte" type="xs:byte"/> <!--Prozentwert-->
+
+    Copyright Dwd
 */

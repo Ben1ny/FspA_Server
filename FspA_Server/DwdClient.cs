@@ -25,13 +25,16 @@ namespace FspA_Server
         private string localPath;
         private string createPath;
         private string dataName;
+        //private char array;
 
+        //weitere Objekte
         private FtpWebRequest request;
         private FtpWebResponse response;
         private Stream responseStream;
         private FileStream saveStream;
         private FileStream cacheStream;
 
+        //Constructor
         public DwdClient()
         {
 #if (GZIP)
@@ -50,6 +53,8 @@ namespace FspA_Server
             Server: ftp://ftp-outgoing2.dwd.de
             Connection URL: ftp://gds26798:IOrbkMZj@ftp-outgoing2.dwd.de*/
         }
+
+        //Destructor
         ~DwdClient()
         {
             this.saveStream.Dispose();
@@ -186,6 +191,30 @@ namespace FspA_Server
             Console.WriteLine("Text: {0}", teest[4]);*/
 #endif
             Console.WriteLine("Download Complete, status {0}", response.StatusDescription);
+        }
+
+        public void openFile()
+        {
+            
+
+            try
+            {   // Open the text file using a stream reader.
+                using (StreamReader sr = new StreamReader(@"C:\ATFolder\Testdata.txt"))
+                {
+                // Read the stream to a string, and write the string to the console. //Hierher
+                //https://msdn.microsoft.com/de-de/library/db5x7c0d(v=vs.110).aspx
+                String[] lines = System.IO.File.ReadAllLines(@"C:\\ATFolder\\Testdata.txt"); //
+                //https://msdn.microsoft.com/de-de/library/ezwyzy7b.aspx
+                //https://msdn.microsoft.com/de-de/library/2c7h58e5(v=vs.110).aspx
+               
+                Console.WriteLine("{0} \n {1}", lines[0], lines[lines.Length - 1]); //Konsole ist die Kommandozeile als Objekt
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("The file could not be read:");
+                Console.WriteLine(e.Message);
+            }
         }
 
         /*Neue Funktion zum einlesen der einzelnen Bits einer Datei.*/
