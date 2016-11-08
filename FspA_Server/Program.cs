@@ -54,7 +54,7 @@ namespace FspA_Server
             Console.WriteLine("Ftp: {0}\n Pfad: {1}", prog.adressFtp, prog.localPath);*/
             prog.getDataDwD();
 
-            dats2.StartListening();
+            //dats2.StartListening();
             Console.ReadLine();
             /*GC.Collect();
             GC.WaitForPendingFinalizers();*/
