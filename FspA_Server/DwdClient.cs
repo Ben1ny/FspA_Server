@@ -41,7 +41,7 @@ namespace FspA_Server
 #elif (ZIP)
             this.adressFtp = "ftp://ftp-cdc.dwd.de/pub/CDC/observations_germany/climate/hourly/air_temperature/recent/stundenwerte_TU_00232_akt.zip";
 #elif (HTML)
-            this.adressFtp = "ftp://ftp-outgoing2.dwd.de/gds/specials/observations/tables/germany/SXDL99_DWAV_20161108_1814_U_HTML";
+            this.adressFtp = "ftp://ftp-outgoing2.dwd.de/gds/specials/observations/tables/germany/SXDL99_DWAV_20161111_1114_U_HTML";
 #endif
             this.createPath = @"C:\ATFolder";
             this.dataName = "Testdata.txt";
@@ -182,6 +182,7 @@ namespace FspA_Server
             chacheString = Regex.Replace(chacheString, "&szlig;", "ß");
             chacheString = Regex.Replace(chacheString, "&minus;", "–");
             chacheString = Regex.Replace(chacheString, "&hellip;", "…");
+            //chacheString = Regex.Replace(chacheString, "&amp;", "@");
             // chacheString = Regex.Replace(chacheString, Chr(147), "&ldquo;");
             // chacheStringchacheString = Regex.Replace(chacheString, Char(132), "&bdquo;");
 
