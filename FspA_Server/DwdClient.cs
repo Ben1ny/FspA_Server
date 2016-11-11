@@ -41,7 +41,7 @@ namespace FspA_Server
 #elif (ZIP)
             this.adressFtp = "ftp://ftp-cdc.dwd.de/pub/CDC/observations_germany/climate/hourly/air_temperature/recent/stundenwerte_TU_00232_akt.zip";
 #elif (HTML)
-            this.adressFtp = "ftp://ftp-outgoing2.dwd.de/gds/specials/observations/tables/germany/SXDL99_DWAV_20161108_1814_U_HTML";
+            this.adressFtp = "ftp://ftp-outgoing2.dwd.de/gds/specials/observations/tables/germany/SXDL99_DWAV_20161111_1214_U_HTML";
 #endif
             this.createPath = @"C:\ATFolder";
             this.dataName = "Testdata.txt";

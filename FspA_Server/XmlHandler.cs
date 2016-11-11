@@ -56,11 +56,12 @@ namespace FspA_Server
                         {
                             locationcache = lines[i];
                             tempcache = lines[i + 3];
-                            humiditycache = lines[i + 6];
+                            humiditycache = lines[i + 4];
                             copyright = lines[lines.Length - 1];
                             break;
                         }
                     }
+                    
                     Console.WriteLine("Ort: {0}\n Temperatur: {1}\n Luftfeuchte: {2}", location, tempcache, humiditycache);
                      
                     Console.WriteLine("\nCopei: {0}", lines[lines.Length - 1]); //Konsole ist die Kommandozeile als Objekt
