@@ -148,32 +148,20 @@ namespace FspA_Server
             saveStream.Close();
             ZipFile.ExtractToDirectory(@"C:\ATFolder\Test.zip", @"C:\ATFolder");
 #elif (HTML)
-           /* this.saveStream = new FileStream(this.localPath, FileMode.Create);
-            responseStream.CopyTo(saveStream);
-            saveStream.Close();
-            FileStream helpst = new FileStream(@"C:\ATFolder\Testhtml.txt", FileMode.Create);
-            helpst.Close();
-            TextWriter ttest = File.CreateText(@"C:\ATFolder\Testhtml.txt");
-            string hallo;
-            string hallo2;
-            StreamReader test = new StreamReader(this.localPath);
-            hallo = test.ReadToEnd();
-            //HttpUtility.HtmlDecode(hallo,ttest);
-            WebUtility.HtmlDecode(hallo, ttest);*/
-
             this.cacheStream = new FileStream(@"C:\ATFolder\Testhtmlorigin.html", FileMode.Create);
             this.saveStream = new FileStream(this.localPath, FileMode.Create);
             responseStream.CopyTo(this.cacheStream);
             this.cacheStream.Close();
             this.saveStream.Close();
 
-            String chacheString = new StreamReader(@"C:\ATFolder\Testhtmlorigin.html").ReadToEnd();
+            String chacheString;// = new StreamReader(@"C:\ATFolder\Testhtmlorigin.html").ReadToEnd();
 
             HtmlDocument doc = new HtmlDocument();
             doc.Load(@"C:\ATFolder\Testhtmlorigin.html");
             chacheString = doc.DocumentNode.InnerText;
 
             chacheString = Regex.Replace(chacheString, @"( |\t|\r?\n)\1+", "$1");
+            //chacheString = Regex.Replace(chacheString, @"\s+$", "");
             chacheString = Regex.Replace(chacheString, "&auml;", "ä");
             chacheString = Regex.Replace(chacheString, "&ouml;", "ö");
             chacheString = Regex.Replace(chacheString, "&uuml;", "ü");
@@ -187,8 +175,6 @@ namespace FspA_Server
             // chacheStringchacheString = Regex.Replace(chacheString, Char(132), "&bdquo;");
 
             System.IO.File.WriteAllText(this.localPath, chacheString);
-            /*String[] teest = System.IO.File.ReadAllLines(@"C:\ATFolder\WriteLines.txt");
-            Console.WriteLine("Text: {0}", teest[4]);*/
 #endif
             Console.WriteLine("Download Complete, status {0}", response.StatusDescription);
         }
