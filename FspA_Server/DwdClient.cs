@@ -170,6 +170,7 @@ namespace FspA_Server
             chacheString = Regex.Replace(chacheString, "&szlig;", "ß");
             chacheString = Regex.Replace(chacheString, "&minus;", "–");
             chacheString = Regex.Replace(chacheString, "&hellip;", "…");
+            //chacheString = Regex.Replace(chacheString, "&amp;", "@");
             // chacheString = Regex.Replace(chacheString, Chr(147), "&ldquo;");
             // chacheStringchacheString = Regex.Replace(chacheString, Char(132), "&bdquo;");
 
