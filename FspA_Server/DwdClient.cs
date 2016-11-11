@@ -3,7 +3,6 @@
 //#define ZIP
 #define HTML
 
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +15,13 @@ using System.Web;
 //using System.Web.Http;
 using HtmlAgilityPack;
 using System.Text.RegularExpressions;
+
+/*Login Dwd Grundversorger:
+            User: gds26798
+            Passwort: IOrbkMZj
+            Server: ftp://ftp-outgoing2.dwd.de
+            Connection URL: ftp://gds26798:IOrbkMZj@ftp-outgoing2.dwd.de*/
+
 
 namespace FspA_Server
 {
@@ -41,16 +47,12 @@ namespace FspA_Server
 #elif (ZIP)
             this.adressFtp = "ftp://ftp-cdc.dwd.de/pub/CDC/observations_germany/climate/hourly/air_temperature/recent/stundenwerte_TU_00232_akt.zip";
 #elif (HTML)
-            this.adressFtp = "ftp://ftp-outgoing2.dwd.de/gds/specials/observations/tables/germany/SXDL99_DWAV_20161111_1214_U_HTML";
+           // this.adressFtp = "ftp://ftp-outgoing2.dwd.de/gds/specials/observations/tables/germany/SXDL99_DWAV_20161111_1514_U_HTML";
+            getHtmlAdressFtp();
 #endif
-            this.createPath = @"C:\ATFolder";
+            this.createPath = @"C:\StudyProjectFolder";
             this.dataName = "Testdata.txt";
-
-            /*Login Dwd Grundversorger:
-            User: gds26798
-            Passwort: IOrbkMZj
-            Server: ftp://ftp-outgoing2.dwd.de
-            Connection URL: ftp://gds26798:IOrbkMZj@ftp-outgoing2.dwd.de*/
+            getHtmlAdressFtp(); 
         }
 
         //Destructor
@@ -63,6 +65,25 @@ namespace FspA_Server
             // Noch nicht ganz ausgereift, Fehler bei löschen wenn zuvor eigenes Verzeichnis angegeben wird.
            /* File.Delete(this.localPath);
             Directory.Delete(this.createPath);*/
+        }
+
+        /*Die Funktion getHtmlAderssFtp ruft das aktuelle Datum ab, um die aktuellen Wetterdaten vom Ftp-Server Grundversorger zu holen, da diese stündlich aktuallisiert werden wird 
+         Stunde - 1 gemacht. Ebenfalls werden die Daten immer um die Minute 14 freigegeben, und diese Werte werden weiterverarbeitet.*/
+        private void getHtmlAdressFtp()
+        {
+            DateTime localDate = DateTime.Now;
+            string localHour;
+            if(localDate.Minute <= 14)
+            {
+                localHour = ((localDate.Hour) - 2).ToString();
+            }
+            else
+            {
+                localHour = (localDate.Hour - 1).ToString();
+            }
+            this.adressFtp = "ftp://ftp-outgoing2.dwd.de/gds/specials/observations/tables/germany/SXDL99_DWAV_" + localDate.Year.ToString() + localDate.Month.ToString() + localDate.Day.ToString() + "_" + localHour + "14_U_HTML";
+            //Debug Funktion to display the Current Adress with the Current time
+            //Console.WriteLine("Aktuelle Uhrzeit html: {0}", localHour);
         }
 
         /*Anlegen der Ftp-Adresse um die Aktuellen Daten zu holen.
@@ -147,7 +168,7 @@ namespace FspA_Server
             saveStream.Close();
             ZipFile.ExtractToDirectory(@"C:\ATFolder\Test.zip", @"C:\ATFolder");
 #elif (HTML)
-            this.cacheStream = new FileStream(@"C:\ATFolder\Testhtmlorigin.html", FileMode.Create);
+            this.cacheStream = new FileStream(@"C:\StudyProjectFolder\Testhtmlorigin.html", FileMode.Create);
             this.saveStream = new FileStream(this.localPath, FileMode.Create);
             responseStream.CopyTo(this.cacheStream);
             this.cacheStream.Close();
@@ -156,7 +177,7 @@ namespace FspA_Server
             String chacheString;// = new StreamReader(@"C:\ATFolder\Testhtmlorigin.html").ReadToEnd();
 
             HtmlDocument doc = new HtmlDocument();
-            doc.Load(@"C:\ATFolder\Testhtmlorigin.html");
+            doc.Load(@"C:\StudyProjectFolder\Testhtmlorigin.html");
             chacheString = doc.DocumentNode.InnerText;
 
             chacheString = Regex.Replace(chacheString, @"( |\t|\r?\n)\1+", "$1");
@@ -170,11 +191,20 @@ namespace FspA_Server
             chacheString = Regex.Replace(chacheString, "&szlig;", "ß");
             chacheString = Regex.Replace(chacheString, "&minus;", "–");
             chacheString = Regex.Replace(chacheString, "&hellip;", "…");
-            //chacheString = Regex.Replace(chacheString, "&amp;", "@");
-            // chacheString = Regex.Replace(chacheString, Chr(147), "&ldquo;");
-            // chacheStringchacheString = Regex.Replace(chacheString, Char(132), "&bdquo;");
-
+            // Ersetzt &copy; durch das © gefunden auf stacoverflow.com
+            chacheString = Regex.Replace(chacheString, "&copy;", "©");
+           // chacheString = Regex.Replace(chacheString, )
             System.IO.File.WriteAllText(this.localPath, chacheString);
+
+            /*Hier werden die einzelnen Children der Wetterdaten des Html Dokuments auf die gleiche Ebene gebracht wie die Parent 
+             um die Daten leichter und ohne Leerzeichen in eine String reinladen zu können.*/
+            String[] meanwhile = File.ReadAllLines(this.localPath);
+            int help;
+            for (help = 0; help < (meanwhile.Length - 19); help++)
+            {
+                meanwhile[help] = meanwhile[help].Substring(1);
+            }
+            File.WriteAllLines(this.localPath, meanwhile);
 #endif
             Console.WriteLine("Download Complete, status {0}", response.StatusDescription);
         }
@@ -203,18 +233,5 @@ namespace FspA_Server
             }
         }
         */
-        /*Neue Funktion zum einlesen der einzelnen Bits einer Datei.*/
-        public void convertTexttoXml()
-        {
-            string hallo;
-            byte[] buffer2 = new byte[100];
-            //FileStream test = new FileStream(this.localPath, FileMode.Open);
-            StreamReader test = new StreamReader(this.localPath);
-            //test.Read(buffer2, 0, 21);
-            hallo = test.ReadToEnd();
-            Console.WriteLine("Test: {0}", hallo);
-            
-            //Console.WriteLine("Test: ");
-        }
     }
 }

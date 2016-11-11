@@ -28,11 +28,11 @@ namespace FspA_Server
         {
             try
             {   // Open the text file using a stream reader.
-                using (StreamReader sr = new StreamReader(@"C:\ATFolder\Testdata.txt"))
+                using (StreamReader sr = new StreamReader(@"C:\StudyProjectFolder\Testdata.txt"))
                 {
                     // Read the stream to a string, and write the string to the console. //Hierher
                     //https://msdn.microsoft.com/de-de/library/db5x7c0d(v=vs.110).aspx
-                    String[] lines = System.IO.File.ReadAllLines(@"C:\\ATFolder\\Testdata.txt"); //
+                    String[] lines = System.IO.File.ReadAllLines(@"C:\\StudyProjectFolder\\Testdata.txt"); //
                     textLength = lines.Length;
                     Console.WriteLine(textLength);
                                      
@@ -42,11 +42,8 @@ namespace FspA_Server
                     {
                         if (i == 2)
                         {
-                            /*timecache2[] = lines[i];
-                            timecache = timecache[i - 10];
-                    */
-                            datecache = lines[i].Substring(lines[i].Length - 22,10);
-
+                            datecache = lines[i].Substring(lines[i].Length - 22, 10);
+                            timecache = lines[i].Substring(lines[i].Length - 10, 5);
                             break;
                         }
                     }
@@ -70,7 +67,7 @@ namespace FspA_Server
                     //https://www.youtube.com/watch?v=iSUxvnppFJA
                     //http://stackoverflow.com/questions/9382846/how-to-insert-c-variables-in-xml
 
-                    XmlTextWriter write = new XmlTextWriter(@"c:\ATFolder\Test.xml", Encoding.UTF8);
+                    XmlTextWriter write = new XmlTextWriter(@"c:\StudyProjectFolder\Test.xml", Encoding.UTF8);
                     write.Formatting = Formatting.Indented;
                     write.WriteStartDocument();
                     write.WriteStartElement("DWD-Daten");
