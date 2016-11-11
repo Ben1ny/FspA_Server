@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace FspA_Server
 {
@@ -32,6 +33,7 @@ namespace FspA_Server
 
         public DataServer()
         {
+            //XmlHandler xml = new XmlHandler();
             allDone = new ManualResetEvent(false);
             port = 11000;
         }
@@ -130,8 +132,13 @@ namespace FspA_Server
                     // client. Display it on the console.
                     Console.WriteLine("Read {0} bytes from socket. \n Data : {1}",
                         content.Length, content);
-                    // Echo the data back to the client.
-                    Send(handler, content);
+                    XmlHandler xml = new XmlHandler();
+                    xml.getLocation(content.Substring(0, (content.Length - 5)));
+                    xml.openFile();
+
+                    /* Echo the data back to the client.
+                    Send(handler, content);*/
+                    Send(handler, File.ReadAllText(@"C:\StudyProjectFolder\Test.xml"));
                 }
                 else
                 {

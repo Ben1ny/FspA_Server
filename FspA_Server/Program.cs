@@ -25,7 +25,7 @@ namespace FspA_Server
         public void getDataDwD()
         {
             DwdClient dwdcl = new DwdClient();
-            XmlHandler xml = new XmlHandler();
+            //XmlHandler xml = new XmlHandler();
             
             dwdcl.setAdressFtp(this.adressFtp);
             dwdcl.setLocalPath(this.localPath);
@@ -35,7 +35,7 @@ namespace FspA_Server
             dwdcl.getResponseFtp();
             dwdcl.decompressAndSave();
 
-            xml.openFile();
+            //xml.openFile();
             //dwdcl.openFile(); //Datei als Stream öffnen
             dwdcl = null;
         }
@@ -57,7 +57,7 @@ namespace FspA_Server
             prog.getDataDwD();
 
             //Funktioniert
-           // dats2.StartListening();
+            dats2.StartListening();
             
             Console.ReadLine();
             /*GC.Collect();
