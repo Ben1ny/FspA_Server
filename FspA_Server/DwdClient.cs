@@ -13,7 +13,7 @@ using System.Net;
 using System.IO;
 using System.IO.Compression;
 using System.Web;
-using System.Web.Http;
+//using System.Web.Http;
 using HtmlAgilityPack;
 using System.Text.RegularExpressions;
 
@@ -25,7 +25,6 @@ namespace FspA_Server
         private string localPath;
         private string createPath;
         private string dataName;
-        //private char array;
 
         //weitere Objekte
         private FtpWebRequest request;
@@ -42,7 +41,7 @@ namespace FspA_Server
 #elif (ZIP)
             this.adressFtp = "ftp://ftp-cdc.dwd.de/pub/CDC/observations_germany/climate/hourly/air_temperature/recent/stundenwerte_TU_00232_akt.zip";
 #elif (HTML)
-            this.adressFtp = "ftp://ftp-outgoing2.dwd.de/gds/specials/observations/tables/germany/SXDL99_DWAV_20161107_2014_U_HTML";
+            this.adressFtp = "ftp://ftp-outgoing2.dwd.de/gds/specials/observations/tables/germany/SXDL99_DWAV_20161108_1814_U_HTML";
 #endif
             this.createPath = @"C:\ATFolder";
             this.dataName = "Testdata.txt";
@@ -178,7 +177,7 @@ namespace FspA_Server
 #endif
             Console.WriteLine("Download Complete, status {0}", response.StatusDescription);
         }
-
+        /*
         public void openFile()
         {
             
@@ -202,7 +201,7 @@ namespace FspA_Server
                 Console.WriteLine(e.Message);
             }
         }
-
+        */
         /*Neue Funktion zum einlesen der einzelnen Bits einer Datei.*/
         public void convertTexttoXml()
         {

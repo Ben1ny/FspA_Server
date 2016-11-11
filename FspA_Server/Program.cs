@@ -25,6 +25,7 @@ namespace FspA_Server
         public void getDataDwD()
         {
             DwdClient dwdcl = new DwdClient();
+            XmlHandler xml = new XmlHandler();
             
             dwdcl.setAdressFtp(this.adressFtp);
             dwdcl.setLocalPath(this.localPath);
@@ -34,7 +35,8 @@ namespace FspA_Server
             dwdcl.getResponseFtp();
             dwdcl.decompressAndSave();
 
-            dwdcl.openFile(); //Datei als Stream öffnen
+            xml.openFile();
+            //dwdcl.openFile(); //Datei als Stream öffnen
             dwdcl = null;
         }
 
@@ -54,9 +56,9 @@ namespace FspA_Server
             Console.WriteLine("Ftp: {0}\n Pfad: {1}", prog.adressFtp, prog.localPath);*/
             prog.getDataDwD();
 
-            /*Funktioniert
-            dats2.StartListening();
-            */
+            //Funktioniert
+           // dats2.StartListening();
+            
             Console.ReadLine();
             /*GC.Collect();
             GC.WaitForPendingFinalizers();*/
