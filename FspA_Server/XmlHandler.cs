@@ -23,11 +23,26 @@ namespace FspA_Server
         private int temp;
         private int humidity;
         private int textLength;
-  
 
-        public void getLocation(string locationRequest)
+
+        public bool getLocation(string locationRequest)
         {
+            //wenn Ort nicht gefunden wurde, gib Fehlermeldung auf Kommandozeile aus:
+            //"Ort nicht vorhanden!" + schicke leere XML an Client(s)
+            //Abfangen ob String leer
             location = locationRequest;
+            bool yesno = false;
+            String[] lines = System.IO.File.ReadAllLines(@"C:\\StudyProjectFolder\\Testdata.txt");
+            for (int i = 0; i < lines.Length; i++)
+            {
+                if (lines[i].Equals(location))
+                {
+                    yesno = true;
+                    break;
+                }
+                //else { yesno = false; }
+            }
+            return yesno;
         }
         public void openFile()
         {
@@ -39,8 +54,7 @@ namespace FspA_Server
                     //https://msdn.microsoft.com/de-de/library/db5x7c0d(v=vs.110).aspx
                     String[] lines = System.IO.File.ReadAllLines(@"C:\\StudyProjectFolder\\Testdata.txt"); 
 
-                    //wenn Ort nicht gefunden wurde, gib Fehlermeldung auf Kommandozeile aus:
-                    //"Ort nicht vorhanden!" + schicke leere XML an Client(s)
+                   
 
                     for (int i = 0; i < lines.Length; i++)
                     {

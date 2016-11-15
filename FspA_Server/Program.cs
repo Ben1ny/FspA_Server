@@ -35,12 +35,17 @@ namespace FspA_Server
             dwdcl.decompressAndSave();
 
             //Markus Test Funktion
-            /*string locationTest;
+            string locationTest;
             XmlHandler xml = new XmlHandler();
-            Console.WriteLine("Geben Sie die gewünschte Station ein:");
-            locationTest = Console.ReadLine();
-            xml.getLocation(locationTest);
-            xml.openFile();*/
+            
+            do
+            {
+                Console.WriteLine("Geben Sie die gewünschte Station ein:");
+                locationTest = Console.ReadLine();
+                xml.getLocation(locationTest);
+            }while( xml.getLocation(locationTest) == false);
+            
+            xml.openFile();
 
             dwdcl = null;
         }
