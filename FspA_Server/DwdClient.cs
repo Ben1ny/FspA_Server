@@ -73,17 +73,39 @@ namespace FspA_Server
         {
             DateTime localDate = DateTime.Now;
             string localHour;
+            string helpHour;
             if(localDate.Minute <= 14)
             {
-                localHour = ((localDate.Hour) - 2).ToString();
+                if ((localDate.Hour - 2) < 10)
+                {
+                    helpHour = (localDate.Hour - 2).ToString();
+                    localHour = helpHour.Insert(0, "0");
+                }
+                else
+                {
+                    localHour = ((localDate.Hour) - 2).ToString();
+                }
+                
             }
             else
             {
-                localHour = (localDate.Hour - 1).ToString();
+                if((localDate.Hour - 1) < 10)
+                {
+                    helpHour = (localDate.Hour - 1).ToString();
+                    localHour = helpHour.Insert(0, "0");
+                }
+                else
+                {
+                    localHour = (localDate.Hour - 1).ToString();
+                }
+                  
             }
+            
+            
             this.adressFtp = "ftp://ftp-outgoing2.dwd.de/gds/specials/observations/tables/germany/SXDL99_DWAV_" + localDate.Year.ToString() + localDate.Month.ToString() + localDate.Day.ToString() + "_" + localHour + "14_U_HTML";
             //Debug Funktion to display the Current Adress with the Current time
             //Console.WriteLine("Aktuelle Uhrzeit html: {0}", localHour);
+            Console.WriteLine(adressFtp);
         }
 
         /*Anlegen der Ftp-Adresse um die Aktuellen Daten zu holen.
@@ -200,38 +222,14 @@ namespace FspA_Server
              um die Daten leichter und ohne Leerzeichen in eine String reinladen zu können.*/
             String[] meanwhile = File.ReadAllLines(this.localPath);
             int help;
-            for (help = 0; help < (meanwhile.Length - 19); help++)
+            for (help = 18; help < (meanwhile.Length - 19); help++)
             {
+                //if(meanwhile[help].IndexOf(" ",0,1))
                 meanwhile[help] = meanwhile[help].Substring(1);
             }
             File.WriteAllLines(this.localPath, meanwhile);
 #endif
             Console.WriteLine("Download Complete, status {0}", response.StatusDescription);
         }
-        /*
-        public void openFile()
-        {
-            
-
-            try
-            {   // Open the text file using a stream reader.
-                using (StreamReader sr = new StreamReader(@"C:\ATFolder\Testdata.txt"))
-                {
-                // Read the stream to a string, and write the string to the console. //Hierher
-                //https://msdn.microsoft.com/de-de/library/db5x7c0d(v=vs.110).aspx
-                String[] lines = System.IO.File.ReadAllLines(@"C:\\ATFolder\\Testdata.txt"); //
-                //https://msdn.microsoft.com/de-de/library/ezwyzy7b.aspx
-                //https://msdn.microsoft.com/de-de/library/2c7h58e5(v=vs.110).aspx
-               
-                Console.WriteLine("{0} \n {1}", lines[0], lines[lines.Length - 1]); //Konsole ist die Kommandozeile als Objekt
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("The file could not be read:");
-                Console.WriteLine(e.Message);
-            }
-        }
-        */
     }
 }

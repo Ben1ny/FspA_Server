@@ -25,7 +25,6 @@ namespace FspA_Server
         public void getDataDwD()
         {
             DwdClient dwdcl = new DwdClient();
-            //XmlHandler xml = new XmlHandler();
             
             dwdcl.setAdressFtp(this.adressFtp);
             dwdcl.setLocalPath(this.localPath);
@@ -35,8 +34,14 @@ namespace FspA_Server
             dwdcl.getResponseFtp();
             dwdcl.decompressAndSave();
 
-            //xml.openFile();
-            //dwdcl.openFile(); //Datei als Stream öffnen
+            //Markus Test Funktion
+            /*string locationTest;
+            XmlHandler xml = new XmlHandler();
+            Console.WriteLine("Geben Sie die gewünschte Station ein:");
+            locationTest = Console.ReadLine();
+            xml.getLocation(locationTest);
+            xml.openFile();*/
+
             dwdcl = null;
         }
 
@@ -56,8 +61,8 @@ namespace FspA_Server
             Console.WriteLine("Ftp: {0}\n Pfad: {1}", prog.adressFtp, prog.localPath);*/
             prog.getDataDwD();
 
-            //Funktioniert
-            dats2.StartListening();
+            //Benny Funktion Server
+            //dats2.StartListening();
             
             Console.ReadLine();
             /*GC.Collect();

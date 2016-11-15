@@ -38,6 +38,15 @@ namespace FspA_Server
             port = 11000;
         }
 
+        static int FreeTcpPort()
+        {
+            TcpListener l = new TcpListener(IPAddress.Loopback, 0);
+            l.Start();
+            int port = ((IPEndPoint)l.LocalEndpoint).Port;
+            l.Stop();
+            return port;
+        }
+
         public void StartListening()
         {
             // Data buffer for incoming data.
@@ -48,11 +57,16 @@ namespace FspA_Server
             // running the listener is "host.contoso.com".
             IPHostEntry ipHostInfo = Dns.Resolve(Dns.GetHostName());
             IPAddress ipAddress = ipHostInfo.AddressList[0];
-            IPEndPoint localEndPoint = new IPEndPoint(ipAddress, port);
 
-            /*Debug Funktion for Server IP Adress
-             * Console.WriteLine("IP: {0}", ipAddress);
-            */
+            //FreeTcpPort() sucht welcher Port frei verwendent werden kann
+            port = FreeTcpPort();
+            IPEndPoint localEndPoint = new IPEndPoint(ipAddress,port);
+            //Debug Funktion to Display the Port Number
+            Console.WriteLine("Portnummer: {0}", localEndPoint.Port);
+
+            //Debug Funktion for Server IP Adress
+            Console.WriteLine("IP: {0}", ipAddress);
+           
             // Create a TCP/IP socket.
             Socket listener = new Socket(AddressFamily.InterNetwork,
                 SocketType.Stream, ProtocolType.Tcp);
