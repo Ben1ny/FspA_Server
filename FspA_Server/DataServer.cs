@@ -33,9 +33,7 @@ namespace FspA_Server
 
         public DataServer()
         {
-            //XmlHandler xml = new XmlHandler();
             allDone = new ManualResetEvent(false);
-            port = 11000;
         }
 
         static int FreeTcpPort()
@@ -69,7 +67,7 @@ namespace FspA_Server
            
             // Create a TCP/IP socket.
             Socket listener = new Socket(AddressFamily.InterNetwork,
-                SocketType.Stream, ProtocolType.Tcp);
+            SocketType.Stream, ProtocolType.Tcp);
 
             // Bind the socket to the local endpoint and listen for incoming connections.
             try

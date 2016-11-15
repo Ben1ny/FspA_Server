@@ -50,19 +50,16 @@ namespace FspA_Server
         {
             Program prog = new Program();
             DataServer dats2 = new DataServer();
-            
 
             Console.WriteLine("Geben Sie den gewünschten Ftp-Adresse an:");
             prog.adressFtp = @Console.ReadLine();
             Console.WriteLine("Geben Sie den gewünschten Speicherpfad an:");
             prog.localPath = @Console.ReadLine();
             
-           /* prog.getDataDwD();
-            Console.WriteLine("Ftp: {0}\n Pfad: {1}", prog.adressFtp, prog.localPath);*/
             prog.getDataDwD();
 
             //Benny Funktion Server
-            //dats2.StartListening();
+            dats2.StartListening();
             
             Console.ReadLine();
             /*GC.Collect();

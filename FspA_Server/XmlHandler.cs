@@ -37,12 +37,7 @@ namespace FspA_Server
                 {
                     // Read the stream to a string, and write the string to the console. //Hierher
                     //https://msdn.microsoft.com/de-de/library/db5x7c0d(v=vs.110).aspx
-                    String[] lines = System.IO.File.ReadAllLines(@"C:\\StudyProjectFolder\\Testdata.txt"); //
-                    //Debugfunktion to display the length of the Currentweather Data
-                    textLength = lines.Length;
-                    Console.WriteLine(textLength);
-                                     
-                    location = Console.ReadLine();
+                    String[] lines = System.IO.File.ReadAllLines(@"C:\\StudyProjectFolder\\Testdata.txt"); 
 
                     //wenn Ort nicht gefunden wurde, gib Fehlermeldung auf Kommandozeile aus:
                     //"Ort nicht vorhanden!" + schicke leere XML an Client(s)
@@ -63,7 +58,7 @@ namespace FspA_Server
                         {
                             locationcache = lines[i];
                             tempcache = lines[i + 3];
-                            humiditycache = lines[i + 4];
+                            humiditycache = lines[i + 6];
                             copyright = lines[lines.Length - 1];
                             break;
                         }

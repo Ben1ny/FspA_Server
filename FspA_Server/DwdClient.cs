@@ -63,7 +63,7 @@ namespace FspA_Server
             this.responseStream.Close();
             //Löscht Datei aus Lokalempfad und Ordner!!!
             // Noch nicht ganz ausgereift, Fehler bei löschen wenn zuvor eigenes Verzeichnis angegeben wird.
-           /* File.Delete(this.localPath);
+            /*File.Delete(this.localPath);
             Directory.Delete(this.createPath);*/
         }
 
@@ -105,7 +105,6 @@ namespace FspA_Server
             this.adressFtp = "ftp://ftp-outgoing2.dwd.de/gds/specials/observations/tables/germany/SXDL99_DWAV_" + localDate.Year.ToString() + localDate.Month.ToString() + localDate.Day.ToString() + "_" + localHour + "14_U_HTML";
             //Debug Funktion to display the Current Adress with the Current time
             //Console.WriteLine("Aktuelle Uhrzeit html: {0}", localHour);
-            Console.WriteLine(adressFtp);
         }
 
         /*Anlegen der Ftp-Adresse um die Aktuellen Daten zu holen.
