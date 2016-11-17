@@ -146,11 +146,21 @@ namespace FspA_Server
                         content.Length, content);
                     XmlHandler xml = new XmlHandler();
                     xml.getLocation(content.Substring(0, (content.Length - 5)));
-                    xml.openFile();
+                    if (xml.getLocation(content.Substring(0, (content.Length - 5))) == true)
+                    {
+                        xml.openFile();
+                        Send(handler, File.ReadAllText(@"C:\StudyProjectFolder\Test.xml"));
+                    }
+                    else
+                    {
+                        Send(handler, "Wetterstation " + content.Substring(0, (content.Length - 5)) + " konnte nicht gefunden werden.");
+                    }
+                        
 
                     /* Echo the data back to the client.
                     Send(handler, content);*/
-                    Send(handler, File.ReadAllText(@"C:\StudyProjectFolder\Test.xml"));
+                    
+                    
                 }
                 else
                 {

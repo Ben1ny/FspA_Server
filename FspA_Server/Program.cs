@@ -29,13 +29,13 @@ namespace FspA_Server
             dwdcl.setAdressFtp(this.adressFtp);
             dwdcl.setLocalPath(this.localPath);
             //Debug
-              Console.WriteLine("Ftp: {0}\n Pfad: {1}", dwdcl.getAdressFtp(), dwdcl.getLocalPath());
+            Console.WriteLine("Ftp: {0}\n Pfad: {1}", dwdcl.getAdressFtp(), dwdcl.getLocalPath());
             dwdcl.connectToFtp();
             dwdcl.getResponseFtp();
             dwdcl.decompressAndSave();
 
             //Markus Test Funktion
-            string locationTest;
+            /*string locationTest;
             XmlHandler xml = new XmlHandler();
             
             do
@@ -45,7 +45,7 @@ namespace FspA_Server
                 xml.getLocation(locationTest);
             }while( xml.getLocation(locationTest) == false);
             
-            xml.openFile();
+            xml.openFile();*/
 
             dwdcl = null;
         }
@@ -56,10 +56,10 @@ namespace FspA_Server
             Program prog = new Program();
             DataServer dats2 = new DataServer();
 
-            Console.WriteLine("Geben Sie den gewünschten Ftp-Adresse an:");
+            /*Console.WriteLine("Geben Sie den gewünschten Ftp-Adresse an:");
             prog.adressFtp = @Console.ReadLine();
             Console.WriteLine("Geben Sie den gewünschten Speicherpfad an:");
-            prog.localPath = @Console.ReadLine();
+            prog.localPath = @Console.ReadLine();*/
             
             prog.getDataDwD();
 
@@ -74,11 +74,12 @@ namespace FspA_Server
 }
 
 /*
-<xs:element name="ort" type="xs:string"/>
-<xs:element name="datum" type="xs:string"/> <!--20161101-->
-<xs:element name="uhrzeit" type="xs:string"/> <!--2000-->
-<xs:element name="temperatur" type="xs:byte"/> <!--Celsius-->
-<xs:element name="luftfeuchte" type="xs:byte"/> <!--Prozentwert-->
 
-    Copyright Dwd
+<xs:element name="ort" type="xs:string"/>
+<xs:element name="datum" type="xs:string"/>
+<xs:element name="uhrzeit" type="xs:string"/>
+<xs:element name="temperatur" type="xs:decimal"/>
+<xs:element name="luftfeuchte" type="xs:byte"/>
+<xs:element name="copyright" type="xs:string"/>
+
 */

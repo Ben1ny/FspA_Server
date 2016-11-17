@@ -106,9 +106,12 @@ namespace FspA_Server
             //Debug Funktion to display the Current Adress with the Current time
             //Console.WriteLine("Aktuelle Uhrzeit html: {0}", localHour);
         }
-
-        /*Anlegen der Ftp-Adresse um die Aktuellen Daten zu holen.
-          Ftp Adresse + Dateiname + Dateiendung*/
+            /*Anlegen der Ftp-Adresse um die Aktuellen Daten zu holen.
+            Ftp Adresse + Dateiname + Dateiendung*/
+        /// <summary>
+        ///  Anlegen der Ftp-Adresse um die Aktuellen Daten zu holen.
+        ///  Ftp Adresse + Dateiname + Dateiendung
+        /// </summary>
         public void setAdressFtp(string adressFtp)
         {
             if(String.IsNullOrEmpty(adressFtp))
