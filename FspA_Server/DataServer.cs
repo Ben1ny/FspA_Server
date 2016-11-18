@@ -54,6 +54,7 @@ namespace FspA_Server
             // The DNS name of the computer
             // running the listener is "host.contoso.com".
             IPHostEntry ipHostInfo = Dns.Resolve(Dns.GetHostName());
+            Console.WriteLine("Host: {0}", Dns.GetHostName());
             IPAddress ipAddress = ipHostInfo.AddressList[0];
 
             //FreeTcpPort() sucht welcher Port frei verwendent werden kann
@@ -145,7 +146,9 @@ namespace FspA_Server
                     Console.WriteLine("Read {0} bytes from socket. \n Data : {1}",
                         content.Length, content);
                     XmlHandler xml = new XmlHandler();
-                    xml.getLocation(content.Substring(0, (content.Length - 5)));
+                    //xml.getLocation(content.Substring(0, (content.Length - 5)));
+                    Console.WriteLine("Länge String: {0} \nIndex <EOF>: {1}\nString nach cut: {2}", content.Length, content.IndexOf("<EOF>"), content.Substring(0, (content.IndexOf("<EOF>"))));
+                    xml.getLocation(content.Substring(0, (content.IndexOf("<EOF>"))));
                     if (xml.getLocation(content.Substring(0, (content.Length - 5))) == true)
                     {
                         xml.openFile();
