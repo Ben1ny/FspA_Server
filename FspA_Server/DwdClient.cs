@@ -25,6 +25,9 @@ using System.Text.RegularExpressions;
 
 namespace FspA_Server
 {
+    /// <summary>
+    /// Die Klasse DWD Client mit Datenfeldern
+    /// </summary>
     class DwdClient
     { 
         private string adressFtp;

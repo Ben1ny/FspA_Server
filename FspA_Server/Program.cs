@@ -11,6 +11,9 @@ using System.Net;
 
 namespace FspA_Server
 {
+    /// <summary>
+    /// Die Klasse (Haupt-)Programm mit Datenfeldern
+    /// </summary>
     class Program
     {
         public string adressFtp;

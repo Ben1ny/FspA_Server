@@ -10,8 +10,10 @@ using System.IO;
 
 namespace FspA_Server
 {
-    
 
+    /// <summary>
+    /// Die Klasse State Object mit Datenfeldern
+    /// </summary>
     public class StateObject
     {
         // Client  socket.
@@ -24,6 +26,9 @@ namespace FspA_Server
         public StringBuilder sb = new StringBuilder();
     }
 
+    /// <summary>
+    /// Die Klasse Data Server mit Datenfeldern
+    /// </summary>
     public class DataServer
     {
         private int port;

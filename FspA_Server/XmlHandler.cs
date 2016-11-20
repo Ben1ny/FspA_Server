@@ -8,28 +8,29 @@ using System.Xml;
 
 namespace FspA_Server
 {
+
+    /// <summary>
+    /// Die Klasse XML Handler mit Datenfeldern
+    /// </summary>
     class XmlHandler
     {
+
         private String location;
-        private String date;
-        private String time;
         private String tempcache;
         private String humiditycache;
         private String locationcache;
         private String datecache;
         private String timecache;
         private String copyright;
-        private String cache;
-        private int temp;
-        private int humidity;
-        private int textLength;
 
 
+        /// <summary>
+        /// Methode zum Durchsuchen der Datei nach Ortstnamen
+        /// </summary>
+        /// <param name="locationRequest"></param>
+        /// <returns></returns>
         public bool getLocation(string locationRequest)
         {
-            //wenn Ort nicht gefunden wurde, gib Fehlermeldung auf Kommandozeile aus:
-            //"Ort nicht vorhanden!" + schicke leere XML an Client(s)
-            //Abfangen ob String leer
             location = locationRequest;
             bool yesno = false;
             String[] lines = System.IO.File.ReadAllLines(@"C:\\StudyProjectFolder\\Testdata.txt");
@@ -40,21 +41,21 @@ namespace FspA_Server
                     yesno = true;
                     break;
                 }
-                //else { yesno = false; }
             }
             return yesno;
         }
+
+        /// <summary>
+        /// Methode die die DWD-Datei nach den festgelegten Parametern durchsucht
+        /// </summary>
         public void openFile()
         {
             try
-            {   // Open the text file using a stream reader.
+            {   // open the text file using a stream reader
                 using (StreamReader sr = new StreamReader(@"C:\StudyProjectFolder\Testdata.txt"))
                 {
-                    // Read the stream to a string, and write the string to the console. //Hierher
-                    //https://msdn.microsoft.com/de-de/library/db5x7c0d(v=vs.110).aspx
+                    // read the stream to a string, and write the string to the console
                     String[] lines = System.IO.File.ReadAllLines(@"C:\\StudyProjectFolder\\Testdata.txt"); 
-
-                   
 
                     for (int i = 0; i < lines.Length; i++)
                     {
@@ -82,9 +83,6 @@ namespace FspA_Server
                      
                     Console.WriteLine("\nCopei: {0}", lines[lines.Length - 1]); //Konsole ist die Kommandozeile als Objekt
 
-                    //https://www.youtube.com/watch?v=iSUxvnppFJA
-                    //http://stackoverflow.com/questions/9382846/how-to-insert-c-variables-in-xml
-
                     XmlTextWriter write = new XmlTextWriter(@"c:\StudyProjectFolder\Test.xml", Encoding.UTF8);
                     write.Formatting = Formatting.Indented;
                     write.WriteStartDocument();
@@ -99,38 +97,6 @@ namespace FspA_Server
                     write.WriteEndDocument();
                     write.Close();
 
-                    /*
-
-                    write.WriteStartDocument();
-                    write.Formatting = Formatting.Indented;
-
-                    write.WriteStartElement("temp");
-                    write.WriteValue(tempcache);
-                    write.WriteEndElement();
-                    
-                    //write.WriteEndElement();
-                    //write.WriteStartElement("hum");
-                    //write.WriteStartElement("hum");
-                    //write.WriteValue(humiditycache);
-                    //write.WriteEndElement();
-
-                    write.WriteEndDocument();
-                    write.Close();
-                    */
-
-                    /*public static XDocument Parse(
-                        string text
-                    )
-                    string xmlstr = @"<?xml version=""1.0""?>
-                    <!-- comment at the root level -->
-                    <Root>
-                    <temp>Content</temp>
-                    <hum>Content</hum>
-                    </Root>";
-
-                    XDocument doc = XDocument.Parse(xmlstr);
-                    Console.WriteLine(doc);
-            */
                 }
             }
             catch (Exception e)
@@ -141,13 +107,3 @@ namespace FspA_Server
         }
     }
 }
-
-/*
-<xs:element name="ort" type="xs:string"/>
-<xs:element name="datum" type="xs:string"/> <!--20161101-->
-<xs:element name="uhrzeit" type="xs:string"/> <!--2000-->
-<xs:element name="temperatur" type="xs:byte"/> <!--Celsius-->
-<xs:element name="luftfeuchte" type="xs:byte"/> <!--Prozentwert-->
-
-    Copyright Dwd
-*/
