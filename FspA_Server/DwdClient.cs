@@ -26,13 +26,25 @@ using System.Text.RegularExpressions;
 namespace FspA_Server
 {
     /// <summary>
-    /// Die Klasse DWD Client mit Datenfeldern
+    /// Die Klasse DwdClient erzeugt lokal einen Ordner und Speichert die aktuellen Wetterdaten vom Deutschen Wetterdienst
     /// </summary>
     class DwdClient
     { 
+        /// <summary>
+        /// Download-Adresse vom DWD-Server
+        /// </summary>
         private string adressFtp;
+        /// <summary>
+        /// Speicheradresse inklusive Dateiname
+        /// </summary>
         private string localPath;
+        /// <summary>
+        /// Lokaler Speicherort 
+        /// </summary>
         private string createPath;
+        /// <summary>
+        /// Name der Wetterdatendatei inklusive Endung (.txt)
+        /// </summary>
         private string dataName;
 
         //weitere Objekte
@@ -42,7 +54,9 @@ namespace FspA_Server
         private FileStream saveStream;
         private FileStream cacheStream;
 
-        //Constructor
+        /// <summary>
+        /// Konstruktor der Klasse DwdClient()
+        /// </summary>
         public DwdClient()
         {
 #if (GZIP)
@@ -58,7 +72,10 @@ namespace FspA_Server
             getHtmlAdressFtp(); 
         }
 
-        //Destructor
+        
+        /// <summary>
+        /// Destruktor der Klasse DwdClient()
+        /// </summary>
         ~DwdClient()
         {
             this.saveStream.Dispose();
@@ -70,25 +87,31 @@ namespace FspA_Server
             Directory.Delete(this.createPath);*/
         }
 
-        /*Die Funktion getHtmlAderssFtp ruft das aktuelle Datum ab, um die aktuellen Wetterdaten vom Ftp-Server Grundversorger zu holen, da diese stündlich aktuallisiert werden wird 
-         Stunde - 1 gemacht. Ebenfalls werden die Daten immer um die Minute 14 freigegeben, und diese Werte werden weiterverarbeitet.*/
+        /// <summary>
+        /// Die Funktion getHtmlAderssFtp ruft das aktuelle Datum ab, um die aktuellen Wetterdaten vom Ftp-Server des DWD zu holen, da diese stündlich aktuallisiert werden die Daten der 
+        /// vorherigen Stunde geholt.Pro Stunde gibt es immer zwei Datenpakete 1. um X:14 und 2. um X:44 diese dienen zur Weiterverarbeitung in das XML Format.
+        ///</summary>
         private void getHtmlAdressFtp()
         {
+
             DateTime localDate = DateTime.Now;
             string localHour;
             string helpHour;
-            if(localDate.Minute <= 14)
+            string localminute;
+
+            if(localDate.Minute <= 14 || localDate.Minute > 44)
             {
                 if ((localDate.Hour - 2) < 10)
                 {
                     helpHour = (localDate.Hour - 2).ToString();
                     localHour = helpHour.Insert(0, "0");
+                    localminute = "44";
                 }
                 else
                 {
                     localHour = ((localDate.Hour) - 2).ToString();
+                    localminute = "44";
                 }
-                
             }
             else
             {
@@ -96,25 +119,23 @@ namespace FspA_Server
                 {
                     helpHour = (localDate.Hour - 1).ToString();
                     localHour = helpHour.Insert(0, "0");
+                    localminute = "14";
                 }
                 else
                 {
                     localHour = (localDate.Hour - 1).ToString();
-                }
-                  
+                    localminute = "14";
+                }     
             }
-            
-            
-            this.adressFtp = "ftp://ftp-outgoing2.dwd.de/gds/specials/observations/tables/germany/SXDL99_DWAV_" + localDate.Year.ToString() + localDate.Month.ToString() + localDate.Day.ToString() + "_" + localHour + "14_U_HTML";
-            //Debug Funktion to display the Current Adress with the Current time
-            //Console.WriteLine("Aktuelle Uhrzeit html: {0}", localHour);
+            this.adressFtp = "ftp://ftp-outgoing2.dwd.de/gds/specials/observations/tables/germany/SXDL99_DWAV_" + localDate.Year.ToString() + localDate.Month.ToString() + localDate.Day.ToString() + "_" + localHour + localminute +"_U_HTML";
         }
-            /*Anlegen der Ftp-Adresse um die Aktuellen Daten zu holen.
-            Ftp Adresse + Dateiname + Dateiendung*/
+
         /// <summary>
-        ///  Anlegen der Ftp-Adresse um die Aktuellen Daten zu holen.
-        ///  Ftp Adresse + Dateiname + Dateiendung
+        /// Die Methode setAdressFtp(string) dient zum erzeugen des Datenlinks per Konsoleneingabe.
+        /// Bei leerem String, wird die Standardadresse verwendet.
+        /// Aufbau: Ftp Adresse + Dateiname + Dateiendung
         /// </summary>
+        /// <param name="adressFtp"></param>
         public void setAdressFtp(string adressFtp)
         {
             if(String.IsNullOrEmpty(adressFtp))
@@ -125,16 +146,22 @@ namespace FspA_Server
             {
                this.adressFtp = adressFtp;
             }
-            
         }
 
+        /// <summary>
+        /// Übergibt die Wetterdaten-Adress 
+        /// </summary>
+        /// <returns>Liefert den Link für die Wetterdaten</returns>
         public string getAdressFtp()
         {
             return this.adressFtp;
         }
 
-        /*Funktion zum einlesen des lokalen Speicherortes für die Datei des Dwd.
-          Dateipfad ohne Dateiname*/
+        /// <summary>
+        /// Funktion zum einlesen des lokalen Speicherortes für die Wetterdaten des Dwd.
+        /// Der Dateipfad wird ohne den Dateinamen angegeben.
+        /// </summary>
+        /// <param name="localPath"></param>
         public void setLocalPath(string localPath)
         {
             if(String.IsNullOrEmpty(localPath))

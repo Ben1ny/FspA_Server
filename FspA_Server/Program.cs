@@ -12,7 +12,7 @@ using System.Net;
 namespace FspA_Server
 {
     /// <summary>
-    /// Die Klasse (Haupt-)Programm mit Datenfeldern
+    /// Die Klasse (Haupt-)Programm dient zur Abarbeitung des Wetterservers
     /// </summary>
     class Program
     {
@@ -25,6 +25,9 @@ namespace FspA_Server
             this.localPath = "";
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public void getDataDwD()
         {
             DwdClient dwdcl = new DwdClient();
