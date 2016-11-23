@@ -12,7 +12,6 @@ using System.Net;
 using System.IO;
 using System.IO.Compression;
 using System.Web;
-//using System.Web.Http;
 using HtmlAgilityPack;
 using System.Text.RegularExpressions;
 
@@ -176,6 +175,10 @@ namespace FspA_Server
             
         }
 
+        /// <summary>
+        /// Die Methode übergibt den Speicherpfad der Wetterdaten.
+        /// </summary>
+        /// <returns>Liefert den Speicherpfad der Wetterdaten.</returns>
         public string getLocalPath()
         {
             return this.localPath;
@@ -183,6 +186,12 @@ namespace FspA_Server
 
         /*Herstellen einer Verbindung zum Ftp Server, anhand der eingegebenen Adresse.
           alternativ kann ein Passwort und Nutzername angegeben werden -> "anonymous"*/
+        
+        /// <summary>
+        /// Die Methode connectToFtp() erstellt anhand der WebRequest.Create() Methode eine Verbindung mit einem Ftp-Server
+        /// für einen Daten Download.
+        /// Über die Klasse-NetworkCredential werden die Zugriffsrechte und Zugriffsdaten für den Ftp-Server festgelegt.
+        /// </summary>
         public void connectToFtp()
         {
             this.request = (FtpWebRequest)WebRequest.Create(adressFtp);
@@ -197,7 +206,9 @@ namespace FspA_Server
 
         }
 
-        /*Entgegennahme der Ftpserver Antwort. Wird zwischengespeichert in einem responseStream Objekt*/
+        /// <summary>
+        /// Die Methode getResponseFtp() nimmt den verwaltet den Datastream der mithilfe der FtpWebResponse-Klasse entgegengenommen wird.
+        /// </summary>
         public void getResponseFtp()
         {
             this.response = (FtpWebResponse)request.GetResponse();
@@ -207,6 +218,13 @@ namespace FspA_Server
 
         /*Anlegen eines lokalen neune Files im Speicherort localPath. Anschließend wird das responseStream Objekt mit hilfe eines GZipStream Objektes dekomprimiert
          * und im lokalen Speicherort abgespeichert.*/
+
+        /// <summary>
+        /// Die Methode decompressAndSave() erstellt durch Verwendung der FileStream-Klasse zwei Dateien eine .html und eine .txt Datei.
+        /// Die .html Wetterdatei dient der Überprüfung auf Richtigkeit der Werte und die .txt Wetterdatei wird verwendet um aus ihr die Standort bezogene 
+        /// Wetter XML-Datei zu erstellen.
+        /// Die .html Datei wird mit der Regex-Klasse von HTML Format in das UTF8 Format umgewandelt.
+        /// </summary>
         public void decompressAndSave()
         {
             //Erzeugen einer neuen Datei im Pfad: localPath   
@@ -247,7 +265,7 @@ namespace FspA_Server
             chacheString = Regex.Replace(chacheString, "&hellip;", "…");
             // Ersetzt &copy; durch das © gefunden auf stacoverflow.com
             chacheString = Regex.Replace(chacheString, "&copy;", "©");
-           // chacheString = Regex.Replace(chacheString, )
+
             System.IO.File.WriteAllText(this.localPath, chacheString);
 
             /*Hier werden die einzelnen Children der Wetterdaten des Html Dokuments auf die gleiche Ebene gebracht wie die Parent 

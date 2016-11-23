@@ -16,7 +16,13 @@ namespace FspA_Server
     /// </summary>
     class Program
     {
+        /// <summary>
+        /// Link zum Datenabruf vom DWD-Ftp Server
+        /// </summary>
         public string adressFtp;
+        /// <summary>
+        /// Speicherpfad für die Wetterdaten
+        /// </summary>
         private string localPath;
 
         public Program()
@@ -26,7 +32,7 @@ namespace FspA_Server
         }
 
         /// <summary>
-        /// 
+        /// Die Funktion getDataDwD() holt die Wetterdaten vom DWD Server und Speicher diese auf dem lokalen PC ab.
         /// </summary>
         public void getDataDwD()
         {
@@ -57,6 +63,11 @@ namespace FspA_Server
         }
 
 
+        /// <summary>
+        /// Main Methode in welcher der Datenabruf von dem DWD-Ftp Server an den Local-PC gestartet wird und anschließend der Local-PC als Server für 
+        /// andere Clients zur Verfügung steht. Diese können Wetterdaten im XML-Format per Standort-Anforderung abrufen.
+        /// </summary>
+        /// <param name="args"></param>
         static void Main(string[] args)
         {
             Program prog = new Program();
