@@ -15,17 +15,38 @@ namespace FspA_Server
     class XmlHandler
     {
 
+        /// <summary>
+        /// Variable für den Ort (1)
+        /// </summary>
         private String location;
+        /// <summary>
+        /// Variable für die Temperatur
+        /// </summary>
         private String tempcache;
+        /// <summary>
+        /// Variable für die Luftfeuchte
+        /// </summary>
         private String humiditycache;
+        /// <summary>
+        /// Variable für den Ort (2)
+        /// </summary>
         private String locationcache;
+        /// <summary>
+        /// Variable für das Datum
+        /// </summary>
         private String datecache;
+        /// <summary>
+        /// Variable für die Uhrzeit
+        /// </summary>
         private String timecache;
+        /// <summary>
+        /// Variable für das Copyright
+        /// </summary>
         private String copyright;
 
 
         /// <summary>
-        /// Methode zum Durchsuchen der Datei nach Ortstnamen
+        /// Methode zum Durchsuchen der Datei nach Ortsnamen
         /// </summary>
         /// <param name="locationRequest"></param>
         /// <returns></returns>

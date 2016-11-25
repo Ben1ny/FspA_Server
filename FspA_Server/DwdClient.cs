@@ -130,7 +130,7 @@ namespace FspA_Server
         }
 
         /// <summary>
-        /// Die Methode setAdressFtp(string) dient zum erzeugen des Datenlinks per Konsoleneingabe.
+        /// Die Methode setAdressFtp(string) dient zum Erzeugen des Datenlinks per Konsoleneingabe.
         /// Bei leerem String, wird die Standardadresse verwendet.
         /// Aufbau: Ftp Adresse + Dateiname + Dateiendung
         /// </summary>
@@ -148,7 +148,7 @@ namespace FspA_Server
         }
 
         /// <summary>
-        /// Übergibt die Wetterdaten-Adress 
+        /// Übergibt die Wetterdaten-Adresse 
         /// </summary>
         /// <returns>Liefert den Link für die Wetterdaten</returns>
         public string getAdressFtp()
@@ -157,7 +157,7 @@ namespace FspA_Server
         }
 
         /// <summary>
-        /// Funktion zum einlesen des lokalen Speicherortes für die Wetterdaten des Dwd.
+        /// Funktion zum Einlesen des lokalen Speicherortes für die Wetterdaten des DWD.
         /// Der Dateipfad wird ohne den Dateinamen angegeben.
         /// </summary>
         /// <param name="localPath"></param>

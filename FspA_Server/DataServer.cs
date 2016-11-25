@@ -37,7 +37,7 @@ namespace FspA_Server
         /// </summary>
         private int port;
         /// <summary>
-        /// Adressinforamtionen für Internethost
+        /// Adressinformationen für Internethost
         /// </summary>
         private IPHostEntry ipHostInfo;
         /// <summary>
@@ -64,7 +64,7 @@ namespace FspA_Server
         }
 
         /// <summary>
-        /// Die Methode FreeTcpPort() sucht nach einem freinen Port zur Verwendung als Server-Port.
+        /// Die Methode FreeTcpPort() sucht nach einem freien Port zur Verwendung als Server-Port.
         /// </summary>
         /// <returns>Liefert die freie Portnummer zurück.</returns>
         static int FreeTcpPort()
@@ -162,7 +162,7 @@ namespace FspA_Server
         }
 
         /// <summary>
-        /// 
+        /// ???
         /// </summary>
         /// <param name="ar"></param>
         public void ReadCallback(IAsyncResult ar)

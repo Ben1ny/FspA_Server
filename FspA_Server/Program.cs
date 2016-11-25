@@ -32,7 +32,7 @@ namespace FspA_Server
         }
 
         /// <summary>
-        /// Die Funktion getDataDwD() holt die Wetterdaten vom DWD Server und Speicher diese auf dem lokalen PC ab.
+        /// Die Funktion getDataDwD() holt die Wetterdaten vom DWD Server und speichert diese auf dem lokalen PC ab.
         /// </summary>
         public void getDataDwD()
         {
