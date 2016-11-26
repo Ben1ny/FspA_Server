@@ -41,7 +41,7 @@ namespace FspA_Server
         /// </summary>
         private int port;
         /// <summary>
-        /// Adressinforamtionen für Internethost
+        /// Adressinformationen für Internethost
         /// </summary>
         private IPHostEntry ipHostInfo;
         /// <summary>
@@ -63,7 +63,6 @@ namespace FspA_Server
         /// Konstruktor der Klasse DataServer()
         /// </summary>
         public DataServer()
-        {
 
             allDone = new ManualResetEvent(false);
         }
@@ -83,7 +82,7 @@ namespace FspA_Server
         }
 
         /// <summary>
-        /// Die Methode FreeTcpPort() sucht nach einem freinen Port zur Verwendung als Server-Port.
+        /// Die Methode FreeTcpPort() sucht nach einem freien Port zur Verwendung als Server-Port.
         /// </summary>
         /// <returns>Liefert die freie Portnummer zurück.</returns>
         static int FreeTcpPort()
