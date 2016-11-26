@@ -31,6 +31,10 @@ namespace FspA_Server
     /// </summary>
     public class DataServer
     {
+        /// <summary>
+        /// Variable zur Erzeugung der Single Instanz
+        /// </summary>
+        private static DataServer single_Instance = null;
 
         /// <summary>
         /// Variable zur Festlegung des Port
@@ -60,7 +64,22 @@ namespace FspA_Server
         /// </summary>
         public DataServer()
         {
+
             allDone = new ManualResetEvent(false);
+        }
+
+        /// <summary>
+        /// Die Methode Ceck_Instance prüft ob ein DataServer Objekt besteht.
+        /// Besteht kein Objekt, wir ein neues angelegt, ansonsten wird das bestehende zurückgegeben.
+        /// </summary>
+        /// <returns>single_Instance</returns>
+        public static DataServer Ceck_Instance()
+        {
+            if(single_Instance == null)
+            {
+                single_Instance = new DataServer();
+            }
+            return single_Instance;
         }
 
         /// <summary>
