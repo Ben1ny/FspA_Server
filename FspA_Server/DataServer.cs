@@ -57,13 +57,11 @@ namespace FspA_Server
         /// </summary>
         public static ManualResetEvent allDone;
 
-        
-
         /// <summary>
         /// Konstruktor der Klasse DataServer()
         /// </summary>
         public DataServer()
-
+        { 
             allDone = new ManualResetEvent(false);
         }
 
@@ -180,7 +178,7 @@ namespace FspA_Server
         }
 
         /// <summary>
-        /// 
+        /// Verarbeitet die eingehende Client Anfrage und gibt bei Übereinstimmung mit einer Wetterstation die Wetterdaten als XML Datei zurück an den Client.
         /// </summary>
         /// <param name="ar"></param>
         public void ReadCallback(IAsyncResult ar)
