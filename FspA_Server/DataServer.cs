@@ -138,7 +138,7 @@ namespace FspA_Server
             try
             {
                 listener.Bind(localEndPoint);
-                listener.Listen(10);
+                listener.Listen(100);
 
                 while (true)
                 {
