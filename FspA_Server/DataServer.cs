@@ -35,7 +35,7 @@ namespace FspA_Server
     }
 
     /// <summary>
-    /// Die Klasse Data Server mit Datenfeldern
+    /// Die Klasse Data Server erzeugt die Server Verbindung und bearbeitet eingehende Client Anfragen
     /// </summary>
     public class DataServer
     {
