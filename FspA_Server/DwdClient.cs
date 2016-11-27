@@ -46,11 +46,25 @@ namespace FspA_Server
         /// </summary>
         private string dataName;
 
-        //weitere Objekte
+        /// <summary>
+        ///  Client Objekt für die FTP Anfrage beim Server mit Zugangsart und Zugangsdaten
+        /// </summary>
         private FtpWebRequest request;
+        /// <summary>
+        /// Objekt welches die Antwort des FTP-Servers enthält
+        /// </summary>
         private FtpWebResponse response;
+        /// <summary>
+        /// Antwort Stream, in welchem die Daten des FTP-Servers abgelegt werden
+        /// </summary>
         private Stream responseStream;
+        /// <summary>
+        /// Datei Objekt für die Verwaltung der Textdatei
+        /// </summary>
         private FileStream saveStream;
+        /// <summary>
+        /// Datei Objekt als Zwischenspeicher der HTML Daten
+        /// </summary>
         private FileStream cacheStream;
 
         /// <summary>
@@ -253,7 +267,6 @@ namespace FspA_Server
             chacheString = doc.DocumentNode.InnerText;
 
             chacheString = Regex.Replace(chacheString, @"( |\t|\r?\n)\1+", "$1");
-            //chacheString = Regex.Replace(chacheString, @"\s+$", "");
             chacheString = Regex.Replace(chacheString, "&auml;", "ä");
             chacheString = Regex.Replace(chacheString, "&ouml;", "ö");
             chacheString = Regex.Replace(chacheString, "&uuml;", "ü");
@@ -274,6 +287,7 @@ namespace FspA_Server
             int help;
             for (help = 18; help < (meanwhile.Length - 19); help++)
             {
+                //drin lassen
                 //if(meanwhile[help].IndexOf(" ",0,1))
                 meanwhile[help] = meanwhile[help].Substring(1);
             }

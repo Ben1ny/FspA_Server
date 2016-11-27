@@ -12,17 +12,25 @@ namespace FspA_Server
 {
 
     /// <summary>
-    /// Die Klasse State Object mit Datenfeldern
+    /// Die Klasse State Object dient als Status für die eingehenden Client Anfragen
     /// </summary>
     public class StateObject
     {
-        // Client  socket.
+        /// <summary>
+        /// Client Socket
+        /// </summary>
         public Socket workSocket = null;
-        // Size of receive buffer.
+        /// <summary>
+        /// Größe des Empfangsspeichers
+        /// </summary>
         public const int BufferSize = 1024;
-        // Receive buffer.
+        /// <summary>
+        /// Empfangsspeicher
+        /// </summary>
         public byte[] buffer = new byte[BufferSize];
-        // Received data string.
+        /// <summary>
+        /// eingehender Daten String
+        /// </summary>
         public StringBuilder sb = new StringBuilder();
     }
 
@@ -98,34 +106,35 @@ namespace FspA_Server
         /// </summary>
         public void StartListening()
         {
-            /* Data buffer for input Data*/
+            /* Data Speicher für eingehende Data*/
             byte[] bytes = new Byte[1024];
 
-            //Set the localendpoint for the Socket from the HostName.
+            // Festlegen des lokalen Endpunktes für das Socket anhand des Hostnamen
             this.ipHostInfo = Dns.Resolve(Dns.GetHostName());
             //this.ipHostInfo = Dns.GetHostEntry(Dns.GetHostName());
-            /*Debug Function to display the Host Name as string*/
+
+            /*Debug Funktion: Host Name als String*/
             Console.WriteLine("Host: {0}", Dns.GetHostName());
 
-            /*Define the IP-Adress*/
+            //Festlegen der IP-Adress
             this.ipAddress = ipHostInfo.AddressList[0];
 
-            //FreeTcpPort() to search for a free Port
+            //FreeTcpPort() sucht nach einem freien Port
             port = FreeTcpPort();
 
             this.localEndPoint = new IPEndPoint(ipAddress,port);
 
-            //Debug Function to display the Port Number
+            //Debug Funktion: Port Number
             Console.WriteLine("Portnummer: {0}", localEndPoint.Port);
 
-            //Debug Function for Server IP Adress
+            //Debug Funktion: Server IP Adress
             Console.WriteLine("IP: {0}", ipAddress);
            
-            // Create a TCP/IP socket.
+            // Erzeugt ein TCP/IP Socket.
             Socket listener = new Socket(AddressFamily.InterNetwork,
             SocketType.Stream, ProtocolType.Tcp);
 
-            // Bind the socket to the local endpoint and listen for incoming connections.
+            // Bindet das Socket an den lokalen Endpunkt und wartet auf einkommende Verbindungen
             try
             {
                 listener.Bind(localEndPoint);
@@ -133,16 +142,16 @@ namespace FspA_Server
 
                 while (true)
                 {
-                    // Set the event to nonsignaled state.
+                    // Setzt das Abfrage Signal zurück
                     allDone.Reset();
 
-                    // Start an asynchronous socket to listen for connections.
+                    // Startet ein asynchrones Socket, um auf eine Verbindung zu warten
                     Console.WriteLine("Waiting for a connection...");
                     listener.BeginAccept(
                         new AsyncCallback(AcceptCallback),
                         listener);
 
-                    // Wait until a connection is made before continuing.
+                    // Wartet bis eine Verbindung besteht bevor weiter gemacht wird
                     allDone.WaitOne();
                 }
 
@@ -163,14 +172,14 @@ namespace FspA_Server
         /// <param name="ar"></param>
         public void AcceptCallback(IAsyncResult ar)
         {
-            // Signal the main thread to continue.
+            // Signal zum weitermachen
             allDone.Set();
 
-            // Get the socket that handles the client request.
+            // Entgegennehmen des Sockets das die Asynchrone anfrage gestartet hat
             Socket listener = (Socket)ar.AsyncState;
             Socket handler = listener.EndAccept(ar);
 
-            // Create the state object.
+            // Erstellen des StateObject
             StateObject state = new StateObject();
             state.workSocket = handler;
             handler.BeginReceive(state.buffer, 0, StateObject.BufferSize, 0,
@@ -185,31 +194,28 @@ namespace FspA_Server
         {
             String content = String.Empty;
 
-            // Retrieve the state object and the handler socket
-            // from the asynchronous state object.
+            //Abrufen des state object und des Sockets von dem Asynchronen state object
             StateObject state = (StateObject)ar.AsyncState;
             Socket handler = state.workSocket;
 
-            // Read data from the client socket. 
+            //Lesen der Daten vom Client socket
             int bytesRead = handler.EndReceive(ar);
 
             if (bytesRead > 0)
             {
-                // There  might be more data, so store the data received so far.
+                // Da mehr Daten vorhanden sein könnten müssen die empfangenen gespeichert werden
                 state.sb.Append(Encoding.ASCII.GetString(
                     state.buffer, 0, bytesRead));
 
-                // Check for end-of-file tag. If it is not there, read 
-                // more data.
+                //Überprüfen auf <eof> Ende Abfrage, wenn nicht vorhanden empfange mehr Daten 
                 content = state.sb.ToString();
                 if (content.IndexOf("<EOF>") > -1)
                 {
-                    /*All the data has been read from the 
-                     client. To be shure that the Data have the right encoding display it on the console.*/
+                    //Gibt die empfangenen Daten auf der Konsole aus
                     Console.WriteLine("Read {0} bytes from socket. \n Data : {1}", content.Length, content);
                     // Start XmlHandler to create XML data for transmission.
                     XmlHandler xml = new XmlHandler();
-                    //Debug function to display the incoming string without eof tag.
+                    //Debug Funktion Eingehender String ohne Endabfrage <eof>
                     //Console.WriteLine("Länge String: {0} \nIndex <EOF>: {1}\nString nach cut: {2}", content.Length, content.IndexOf("<EOF>"), content.Substring(0, (content.IndexOf("<EOF>"))));
                     xml.getLocation(content.Substring(0, (content.IndexOf("<EOF>"))));
                     if (xml.getLocation(content.Substring(0, (content.Length - 5))) == true)
@@ -224,7 +230,7 @@ namespace FspA_Server
                 }
                 else
                 {
-                    // recieve more data
+                    // Empfang weiterer Daten
                     handler.BeginReceive(state.buffer, 0, StateObject.BufferSize, 0,
                     new AsyncCallback(ReadCallback), state);
                 }
@@ -238,10 +244,10 @@ namespace FspA_Server
         /// <param name="data"></param>
         private void Send(Socket handler, String data)
         {
-            //convert the string into byte data with ASCII encoding.
+            //Konvertiert den String in Bytes mit ASCII Kodierung.
             byte[] byteData = Encoding.ASCII.GetBytes(data);
 
-            //beginn to transmit data to the client.
+            //Beginnt mit der Übertragung der Daten an den Client
             handler.BeginSend(byteData, 0, byteData.Length, 0,
                 new AsyncCallback(SendCallback), handler);
         }
@@ -257,7 +263,7 @@ namespace FspA_Server
                 // Abrufen des Socket aus dem StateObject
                 Socket handler = (Socket)ar.AsyncState;
 
-                // Complete sending the data to the remote device.
+                //Daten wurden an den Client komplett übertragen 
                 int bytesSent = handler.EndSend(ar);
                 Console.WriteLine("Sent {0} bytes to client.", bytesSent);
 
