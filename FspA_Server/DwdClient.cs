@@ -285,11 +285,13 @@ namespace FspA_Server
              um die Daten leichter und ohne Leerzeichen in eine String reinladen zu können.*/
             String[] meanwhile = File.ReadAllLines(this.localPath);
             int help;
-            for (help = 18; help < (meanwhile.Length - 19); help++)
+            //for (help = 14; help < (meanwhile.Length - 19); help++)
+            for (help = 0; help < (meanwhile.Length); help++)
             {
-                //drin lassen
-                //if(meanwhile[help].IndexOf(" ",0,1))
-                meanwhile[help] = meanwhile[help].Substring(1);
+                if(meanwhile[help].IndexOf(" ",0,1) == 0)
+                {
+                    meanwhile[help] = meanwhile[help].Substring(1);
+                }
             }
             File.WriteAllLines(this.localPath, meanwhile);
 #endif
