@@ -94,7 +94,7 @@ namespace FspA_Server
                         {
                             locationcache = lines[i];
                             tempcache = lines[i + 3];
-                            humiditycache = lines[i + 6];
+                            humiditycache = lines[i + 4];
                             copyright = lines[lines.Length - 1];
                             break;
                         }
