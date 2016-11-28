@@ -131,12 +131,12 @@ namespace FspA_Server
                 {
                     helpHour = (localDate.Hour - 1).ToString();
                     localHour = helpHour.Insert(0, "0");
-                    localminute = "44";
+                    localminute = "14";
                 }
                 else
                 {
                     localHour = (localDate.Hour - 1).ToString();
-                    localminute = "44";
+                    localminute = "14";
                 }     
             }
             this.adressFtp = "ftp://ftp-outgoing2.dwd.de/gds/specials/observations/tables/germany/SXDL99_DWAV_" + localDate.Year.ToString() + localDate.Month.ToString() + localDate.Day.ToString() + "_" + localHour + localminute +"_U_HTML";
