@@ -78,7 +78,6 @@ namespace FspA_Server
             this.adressFtp = "ftp://ftp-cdc.dwd.de/pub/CDC/observations_germany/climate/hourly/air_temperature/recent/stundenwerte_TU_00232_akt.zip";
 #elif (HTML)
            // this.adressFtp = "ftp://ftp-outgoing2.dwd.de/gds/specials/observations/tables/germany/SXDL99_DWAV_20161111_1514_U_HTML";
-            getHtmlAdressFtp();
 #endif
             this.createPath = @"C:\StudyProjectFolder";
             this.dataName = "Testdata.txt";
@@ -112,7 +111,7 @@ namespace FspA_Server
             string helpHour;
             string localminute;
 
-            if(localDate.Minute <= 14 || localDate.Minute > 44)
+            if(localDate.Minute <= 14)
             {
                 if ((localDate.Hour - 2) < 10)
                 {
@@ -132,12 +131,12 @@ namespace FspA_Server
                 {
                     helpHour = (localDate.Hour - 1).ToString();
                     localHour = helpHour.Insert(0, "0");
-                    localminute = "14";
+                    localminute = "44";
                 }
                 else
                 {
                     localHour = (localDate.Hour - 1).ToString();
-                    localminute = "14";
+                    localminute = "44";
                 }     
             }
             this.adressFtp = "ftp://ftp-outgoing2.dwd.de/gds/specials/observations/tables/germany/SXDL99_DWAV_" + localDate.Year.ToString() + localDate.Month.ToString() + localDate.Day.ToString() + "_" + localHour + localminute +"_U_HTML";
