@@ -100,7 +100,7 @@ namespace FspA_Server
                         }
                     }
                     
-                    Console.WriteLine("Ort: {0}\n Temperatur: {1}\n Luftfeuchte: {2}", location, tempcache, humiditycache);
+                    Console.WriteLine("Ort: {0}\nTemperatur: {1}\nLuftfeuchte: {2}", location, tempcache, humiditycache);
                      
                     Console.WriteLine("\nCopei: {0}", lines[lines.Length - 1]); //Konsole ist die Kommandozeile als Objekt
 
