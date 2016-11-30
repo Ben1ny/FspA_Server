@@ -73,7 +73,7 @@ namespace FspA_Server
             Program prog = new Program();
             //Ersetzt durch Singleton Pattern Ansatz
             //DataServer dats2 = new DataServer();
-            DataServer dats2 = DataServer.Ceck_Instance();
+            DataServer dats2 = DataServer.Check_Instance();
 
             /*Console.WriteLine("Geben Sie den gewünschten Ftp-Adresse an:");
             prog.adressFtp = @Console.ReadLine();

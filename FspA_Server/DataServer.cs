@@ -68,7 +68,7 @@ namespace FspA_Server
         /// <summary>
         /// Konstruktor der Klasse DataServer()
         /// </summary>
-        public DataServer()
+        private DataServer()
         { 
             allDone = new ManualResetEvent(false);
         }
@@ -78,7 +78,7 @@ namespace FspA_Server
         /// Besteht kein Objekt, wir ein neues angelegt, ansonsten wird das bestehende zurückgegeben.
         /// </summary>
         /// <returns>single_Instance</returns>
-        public static DataServer Ceck_Instance()
+        public static DataServer Check_Instance()
         {
             if(single_Instance == null)
             {
